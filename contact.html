@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Main</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contacts</a>
+        </nav>
+        <button id="theme-toggle">Switch Theme</button>
+    </header>
+    
+    <main class="contact-form">
+        <h1>Контакты</h1>
+        <form id="contact-form" action="#" method="post">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" required></textarea>
+            
+            <button type="submit">Отправить</button>
+        </form>
+
+        <!-- Блок для вывода сообщения -->
+        <div id="form-response" style="display: none;"></div>
+
+        <p><strong>Email:</strong> makpalkalelova9@gmail.com</p>
+        <p><strong>Социальные сети:</strong></p>
+        <div class="social-links">
+            <a href="https://t.me/yourusername" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://instagram.com/yourusername" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Makpal</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
