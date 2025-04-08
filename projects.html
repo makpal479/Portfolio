@@ -1,217 +1,251 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Мои мини-игры</title>
-  <link rel="stylesheet" href="projects.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты — Мини-игры</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .project-card {
+            background: white;
+            color: black;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        input {
+            padding: 5px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Мои мини-игры</h1>
+    </header>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="projects.html">Проекты</a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+    <div class="projects-container">
+        <!-- Кликер -->
+        <div class="project-card">
+            <h2>Кликер</h2>
+            <p>Осталось времени: <span id="time">30</span>s</p>
+            <p>Счёт: <span id="score">0</span></p>
+            <p>Рекорд: <span id="record">0</span></p>
+            <button id="startBtn">Старт</button>
+            <button id="clickBtn" disabled>НАЖМИ МЕНЯ!</button>
+            <button id="pauseBtn" disabled>Пауза</button>
+            <button id="resetBtn">Сбросить счёт</button>
+        </div>
 
-  <header>
-    <h1>Мои мини-игры</h1>
-  </header>
+        <!-- Генератор приключений -->
+        <div class="project-card">
+            <h2>Генератор приключений</h2>
+            <p id="adventure">Нажмите кнопку для генерации приключения.</p>
+            <button onclick="generateAdventure()">Сгенерировать</button>
+            <button onclick="clearHistory()">Очистить историю</button>
+            <h4>История:</h4>
+            <ul id="history"></ul>
+        </div>
 
-  <main class="games-container">
-    <div class="game-container">
-      <h2>Осталось времени: <span id="time">30</span>s</h2>
-      <h3>Счёт: <span id="score">0</span></h3>
-      <h3>Рекорд: <span id="record">0</span></h3>
-      <button id="startBtn" class="start-button">Старт</button>
-      <button id="clickBtn" class="click-button" disabled>НАЖМИ МЕНЯ!</button>
-      <br><br>
-      <button id="pauseBtn" class="pause-button" disabled>Пауза</button>
-      <button id="resetBtn" class="reset-button">Сбросить Счёт</button>
+        <!-- Угадай число -->
+        <div class="project-card">
+            <h2>Угадай число</h2>
+            <p>Введите число от 1 до 100:</p>
+            <input type="number" id="guessInput" min="1" max="100">
+            <button onclick="checkGuess()">Проверить</button>
+            <p id="message"></p>
+            <p>Осталось попыток: <span id="attempts">10</span></p>
+            <button onclick="resetGame()">Начать заново</button>
+        </div>
     </div>
-
-    <div class="container">
-      <h1>Генератор приключений</h1>
-      <p id="adventure">Нажмите кнопку для генерации приключения.</p>
-      <button onclick="generateAdventure()">Сгенерировать приключение</button>
-      <button onclick="clearHistory()">Очистить историю</button>
-      <h2>История приключений</h2>
-      <ul id="history"></ul>
-    </div>
-
-    <div class="container">
-      <h1>Угадай число</h1>
-      <p>Компьютер загадал число от 1 до 100. Попробуйте угадать!</p>
-      <input type="number" id="guessInput" min="1" max="100" placeholder="Введите число">
-      <button onclick="checkGuess()">Проверить</button>
-      <p id="message"></p>
-      <p>Осталось попыток: <span id="attempts">10</span></p>
-      <button onclick="resetGame()">Начать заново</button>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2025 Все права защищены</p>
-  </footer>
-
-  <script>
-    let score = 0;
-    let timeLeft = 30;
-    let timer;
-    let Paused = false;
-    let Running = false;
-    let record = Number(localStorage.getItem("clickerRecord")) || 0;
-    document.getElementById("record").textContent = record;
-
-    function startTimer() {
-      Running = true;
-      document.getElementById("clickBtn").disabled = false;
-      document.getElementById("pauseBtn").disabled = false;
-      document.getElementById("startBtn").disabled = true;
-
-      timer = setInterval(() => {
-        if (timeLeft > 0 && !Paused) {
-          timeLeft--;
-          document.getElementById("time").textContent = timeLeft;
-        } else if (timeLeft === 0) {
-          clearInterval(timer);
-          Running = false;
-          document.getElementById("clickBtn").disabled = true;
-          alert(`Время вышло! Ваш итоговый счёт: ${score}`);
-
-          if (score > record) {
-            record = score;
-            localStorage.setItem("clickerRecord", record);
-            document.getElementById("record").textContent = record;
-          }
+    <footer>
+        <p>&copy; 2025 Мини-игры от меня :)</p>
+    </footer>
+    
+    <script>
+        // Кликер
+        let score = 0, timeLeft = 30, timer, Paused = false, Running = false;
+        let record = Number(localStorage.getItem("clickerRecord")) || 0;
+        document.getElementById("record").textContent = record;
+        document.getElementById("startBtn").onclick = function() {
+            Running = true;
+            document.getElementById("clickBtn").disabled = false;
+            document.getElementById("pauseBtn").disabled = false;
+            this.disabled = true;
+            timer = setInterval(() => {
+                if (timeLeft > 0 && !Paused) {
+                    timeLeft--;
+                    document.getElementById("time").textContent = timeLeft;
+                } else if (timeLeft === 0) {
+                    clearInterval(timer);
+                    Running = false;
+                    document.getElementById("clickBtn").disabled = true;
+                    alert(`Время вышло! Ваш счёт: ${score}`);
+                    if (score > record) {
+                        record = score;
+                        localStorage.setItem("clickerRecord", record);
+                        document.getElementById("record").textContent = record;
+                    }
+                }
+            }, 1000);
         }
-      }, 1000);
-    }
+        document.getElementById("clickBtn").onclick = function() {
+            if (timeLeft > 0 && !Paused) {
+                score++;
+                document.getElementById("score").textContent = score;
+            }
+        }
+        document.getElementById("pauseBtn").onclick = function() {
+            if (!Running) return;
+            Paused = !Paused;
+            this.textContent = Paused ? "Продолжить" : "Пауза";
+        }
+        document.getElementById("resetBtn").onclick = function() {
+            score = 0; timeLeft = 30; Paused = false; Running = false;
+            document.getElementById("score").textContent = score;
+            document.getElementById("time").textContent = timeLeft;
+            document.getElementById("pauseBtn").textContent = "Пауза";
+            document.getElementById("clickBtn").disabled = true;
+            document.getElementById("pauseBtn").disabled = true;
+            document.getElementById("startBtn").disabled = false;
+            clearInterval(timer);
+        }
 
-    document.getElementById("startBtn").addEventListener("click", startTimer);
-    document.getElementById("clickBtn").addEventListener("click", () => {
-      if (timeLeft > 0 && !Paused) {
-        score++;
-        document.getElementById("score").textContent = score;
-      }
-    });
-    document.getElementById("pauseBtn").addEventListener("click", () => {
-      if (!Running) return;
-      Paused = !Paused;
-      document.getElementById("pauseBtn").textContent = Paused ? "Продолжить" : "Пауза";
-    });
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      score = 0;
-      timeLeft = 30;
-      Paused = false;
-      Running = false;
-      document.getElementById("score").textContent = score;
-      document.getElementById("time").textContent = timeLeft;
-      document.getElementById("pauseBtn").textContent = "Пауза";
-      document.getElementById("clickBtn").disabled = true;
-      document.getElementById("pauseBtn").disabled = true;
-      document.getElementById("startBtn").disabled = false;
-      clearInterval(timer);
-    });
+        // Генератор приключений
+        const characters = [
+            { name: "Рыцарь", prep: "Рыцарем" },
+            { name: "Маг", prep: "Магом" },
+            { name: "Вор", prep: "Вором" },
+            { name: "Эльф", prep: "Эльфом" },
+            { name: "Орк", prep: "Орком" }
+        ];
+        const locations = [
+            { name: "Тёмный лес", prep: "Тёмном лесу" },
+            { name: "Замок", prep: "Заброшенном замке" },
+            { name: "Царство воды", prep: "Подводном царстве" },
+            { name: "Горы", prep: "Горном убежище" },
+            { name: "Лёд", prep: "Ледяной пещере" }
+        ];
+        const villains = [
+            { name: "Дракон", prep: "Драконом" },
+            { name: "Колдун", prep: "Колдуном" },
+            { name: "Гоблин", prep: "Гоблином" },
+            { name: "Демон", prep: "Демоном" },
+            { name: "Призрак", prep: "Призраком" }
+        ];
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+        function generateAdventure() {
+            const ch = getRandomElement(characters);
+            const loc = getRandomElement(locations);
+            const vil = getRandomElement(villains);
+            const text = `Ваш персонаж - ${ch.name}, в ${loc.prep}, сражается с ${vil.prep}.`;
+            document.getElementById("adventure").textContent = text;
+            saveToHistory(text);
+        }
+        function saveToHistory(a) {
+            let h = JSON.parse(localStorage.getItem("adventureHistory")) || [];
+            h.push(a);
+            localStorage.setItem("adventureHistory", JSON.stringify(h));
+            updateHistoryUI();
+        }
+        function updateHistoryUI() {
+            const list = document.getElementById("history");
+            list.innerHTML = "";
+            let h = JSON.parse(localStorage.getItem("adventureHistory")) || [];
+            h.forEach(entry => {
+                let li = document.createElement("li");
+                li.textContent = entry;
+                list.appendChild(li);
+            });
+        }
+        function clearHistory() {
+            localStorage.removeItem("adventureHistory");
+            updateHistoryUI();
+        }
+        updateHistoryUI();
 
-    const characters = [
-      { name: "Рыцарь", prep: "Рыцарем" },
-      { name: "Маг", prep: "Магом" },
-      { name: "Вор", prep: "Вором" },
-      { name: "Эльф", prep: "Эльфом" },
-      { name: "Орк", prep: "Орком" }
-    ];
-    const locations = [
-      { name: "Тёмный лес", prep: "Тёмном лесу" },
-      { name: "Заброшенный замок", prep: "Заброшенном замке" },
-      { name: "Подводное царство", prep: "Подводном царстве" },
-      { name: "Горное убежище", prep: "Горном убежище" },
-      { name: "Ледяная пещера", prep: "Ледяной пещере" }
-    ];
-    const villains = [
-      { name: "Дракон", prep: "Драконом" },
-      { name: "Колдун", prep: "Колдуном" },
-      { name: "Гоблин", prep: "Гоблином" },
-      { name: "Демон", prep: "Демоном" },
-      { name: "Призрак", prep: "Призраком" }
-    ];
-
-    function getRandomElement(array) {
-      return array[Math.floor(Math.random() * array.length)];
-    }
-
-    function generateAdventure() {
-      const character = getRandomElement(characters);
-      const location = getRandomElement(locations);
-      const villain = getRandomElement(villains);
-      const adventureText = `Ваш персонаж - ${character.name}, находящийся в ${location.prep}, сражается с ${villain.prep}.`;
-
-      document.getElementById("adventure").textContent = adventureText;
-      saveToHistory(adventureText);
-    }
-
-    function saveToHistory(adventure) {
-      let history = JSON.parse(localStorage.getItem("adventureHistory")) || [];
-      history.push(adventure);
-      localStorage.setItem("adventureHistory", JSON.stringify(history));
-      updateHistoryUI();
-    }
-
-    function updateHistoryUI() {
-      const historyList = document.getElementById("history");
-      historyList.innerHTML = "";
-      let history = JSON.parse(localStorage.getItem("adventureHistory")) || [];
-      history.forEach(entry => {
-        let li = document.createElement("li");
-        li.textContent = entry;
-        historyList.appendChild(li);
-      });
-    }
-
-    function clearHistory() {
-      localStorage.removeItem("adventureHistory");
-      updateHistoryUI();
-    }
-
-    updateHistoryUI();
-
-    let randomNumber = Math.floor(Math.random() * 100) + 1;
-    let attemptsLeft = 10;
-
-    function checkGuess() {
-      let userGuess = parseInt(document.getElementById("guessInput").value);
-      let message = document.getElementById("message");
-
-      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-        message.textContent = "Введите число от 1 до 100!";
-        return;
-      }
-
-      attemptsLeft--;
-      document.getElementById("attempts").textContent = attemptsLeft;
-
-      if (userGuess === randomNumber) {
-        message.textContent = "Поздравляем! Вы угадали число!";
-        disableInput();
-      } else if (userGuess < randomNumber) {
-        message.textContent = "Загаданное число больше!";
-      } else {
-        message.textContent = "Загаданное число меньше!";
-      }
-
-      if (attemptsLeft === 0 && userGuess !== randomNumber) {
-        message.textContent = `Вы проиграли! Число было ${randomNumber}.`;
-        disableInput();
-      }
-    }
-
-    function disableInput() {
-      document.getElementById("guessInput").disabled = true;
-    }
-
-    function resetGame() {
-      randomNumber = Math.floor(Math.random() * 100) + 1;
-      attemptsLeft = 10;
-      document.getElementById("attempts").textContent = attemptsLeft;
-      document.getElementById("message").textContent = "";
-      document.getElementById("guessInput").value = "";
-      document.getElementById("guessInput").disabled = false;
-    }
-  </script>
-
+        // Угадай число
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsLeft = 10;
+        function checkGuess() {
+            let guess = parseInt(document.getElementById("guessInput").value);
+            let msg = document.getElementById("message");
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                msg.textContent = "Введите число от 1 до 100!";
+                return;
+            }
+            attemptsLeft--;
+            document.getElementById("attempts").textContent = attemptsLeft;
+            if (guess === randomNumber) {
+                msg.textContent = "Поздравляем! Вы угадали число!";
+                disableInput();
+            } else if (guess < randomNumber) {
+                msg.textContent = "Число больше!";
+            } else {
+                msg.textContent = "Число меньше!";
+            }
+            if (attemptsLeft === 0 && guess !== randomNumber) {
+                msg.textContent = `Вы проиграли! Загаданное число: ${randomNumber}.`;
+                disableInput();
+            }
+        }
+        function disableInput() {
+            document.getElementById("guessInput").disabled = true;
+        }
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attemptsLeft = 10;
+            document.getElementById("attempts").textContent = attemptsLeft;
+            document.getElementById("message").textContent = "";
+            document.getElementById("guessInput").value = "";
+            document.getElementById("guessInput").disabled = false;
+        }
+    </script>
 </body>
 </html>
