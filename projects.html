@@ -4,7 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Мои мини-игры</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .game-container,
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    .click-button { background-color: #007bff; color: white; }
+    .reset-button { background-color: #28a745; color: white; }
+    .pause-button { background-color: #ffc107; color: black; }
+    .start-button { background-color: #17a2b8; color: white; }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 1em 0;
+      margin-top: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -64,7 +122,6 @@
       document.getElementById("clickBtn").disabled = false;
       document.getElementById("pauseBtn").disabled = false;
       document.getElementById("startBtn").disabled = true;
-
       timer = setInterval(() => {
         if (timeLeft > 0 && !Paused) {
           timeLeft--;
@@ -74,7 +131,6 @@
           Running = false;
           document.getElementById("clickBtn").disabled = true;
           alert(`Время вышло! Ваш итоговый счёт: ${score}`);
-
           if (score > record) {
             record = score;
             localStorage.setItem("clickerRecord", record);
@@ -141,7 +197,6 @@
       const location = getRandomElement(locations);
       const villain = getRandomElement(villains);
       const adventureText = `Ваш персонаж - ${character.name}, находящийся в ${location.prep}, сражается с ${villain.prep}.`;
-
       document.getElementById("adventure").textContent = adventureText;
       saveToHistory(adventureText);
     }
