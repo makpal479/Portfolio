@@ -33,6 +33,9 @@ button {
     margin: 5px;
     padding: 10px;
     cursor: pointer;
+    background-color: #444; /* Устанавливаем один цвет фона для кнопки */
+    color: white; /* Белый текст на кнопке */
+    border: none;
     transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
 }
 
@@ -102,12 +105,14 @@ body.dark-mode nav a {
 }
 
 body.dark-mode button {
-    background-color: #555;
-    color: white;
+    /* Убираем изменения для кнопок в тёмной теме */
+    background-color: #444; /* Кнопка остаётся с тем же фоном */
+    color: white; /* Кнопка остаётся с белым текстом */
 }
 
 body.dark-mode #themeToggleBtn {
-    background-color: #666;
+    background-color: #444; /* Кнопка для переключения темы */
+    color: white;
 }
 
     </style>
