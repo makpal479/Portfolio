@@ -3,41 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои проекты</title>
-    <link rel="stylesheet" href="projects.css">
-    <script src="script.js"></script>
+    <title>Проекты — Мини-игры</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .project-card {
+            background: white;
+            color: black;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        input {
+            padding: 5px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.html">Main</Main></a>
-            <a href="about.html">About <menu></menu></a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contacts</a>
-        </nav>
-        <button id="theme-toggle">Switch Theme</button>
+        <h1>Мои мини-игры</h1>
     </header>
-    <main class="projects-container">
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="projects.html">Проекты</a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+    <div class="projects-container">
+        <!-- Кликер -->
         <div class="project-card">
-            <img src="women2.jpeg" alt="Проект 1">
-            <h3>Project 1</h3>
-            <p>Game character model. <br>The 3D model of the girl was created in Blender using sculpting and manual retopology for optimal deformation during animation. The topology is simplified, with correct loops for facial expressions. The hair is made with geometric strands, and the eyes use PBR shaders for realistic highlights. The UV unfolding is optimized, the materials include normal and roughness maps. Prepared for rigging, with support for shape keys and constraints. Suitable for animation and rendering.</p>
+            <h2>Кликер</h2>
+            <p>Осталось времени: <span id="time">30</span>s</p>
+            <p>Счёт: <span id="score">0</span></p>
+            <p>Рекорд: <span id="record">0</span></p>
+            <button id="startBtn">Старт</button>
+            <button id="clickBtn" disabled>НАЖМИ МЕНЯ!</button>
+            <button id="pauseBtn" disabled>Пауза</button>
+            <button id="resetBtn">Сбросить счёт</button>
         </div>
-        <div class="project-card">
-            <img src="pump.jpeg" alt="Проект 2">
-            <h3>Project 2</h3>
-            <p>Production pump model <br>The 3D model of an industrial pump was created in Blender with precise geometry and optimized topology for visualization and technical animation. Hard-surface modeling techniques were used, including Boolean operations and subdivision for clean details. The topology consists of evenly distributed quads to avoid artifacts. PBR materials with normal and metallic maps enhance realism. The UV unwrapping is optimized for technical labels. The model is prepared for rendering and mechanical simulation.</p>
-        </div>
-        <div class="project-card">
-            <img src="2d_character.JPG" alt="Проект 3">
-            <h3>Project 3</h3>
-            <p>Game character model. <br>2D anime stylized 3D model created in Blender with an emphasis on clean topology and optimization for cel-shading rendering. Retopology is simplified, with an emphasis on smooth loops for facial expressions. Hair consists of geometric strands with minimal detail. Materials use flat shader with hand-painted textures or toon shading. Eyes are painted on UV texture or created with shaders. Prepared for animation with shape keys and bone rig.</p>
-        </div>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 Makpal</p>
 
+        <!-- Генератор приключений -->
+        <div class="project-card">
+            <h2>Генератор приключений</h2>
+            <p id="adventure">Нажмите кнопку для генерации приключения.</p>
+            <button onclick="generateAdventure()">Сгенерировать</button>
+            <button onclick="clearHistory()">Очистить историю</button>
+            <h4>История:</h4>
+            <ul id="history"></ul>
+        </div>
+
+        <!-- Угадай число -->
+        <div class="project-card">
+            <h2>Угадай число</h2>
+            <p>Введите число от 1 до 100:</p>
+            <input type="number" id="guessInput" min="1" max="100">
+            <button onclick="checkGuess()">Проверить</button>
+            <p id="message"></p>
+            <p>Осталось попыток: <span id="attempts">10</span></p>
+            <button onclick="resetGame()">Начать заново</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Мини-игры от меня :)</p>
     </footer>
+    
+    <script>
+        // Кликер
+        let score = 0, timeLeft = 30, timer, Paused = false, Running = false;
+        let record = Number(localStorage.getItem("clickerRecord")) || 0;
+        document.getElementById("record").textContent = record;
+        document.getElementById("startBtn").onclick = function() {
+            Running = true;
+            document.getElementById("clickBtn").disabled = false;
+            document.getElementById("pauseBtn").disabled = false;
+            this.disabled = true;
+            timer = setInterval(() => {
+                if (timeLeft > 0 && !Paused) {
+                    timeLeft--;
+                    document.getElementById("time").textContent = timeLeft;
+                } else if (timeLeft === 0) {
+                    clearInterval(timer);
+                    Running = false;
+                    document.getElementById("clickBtn").disabled = true;
+                    alert(`Время вышло! Ваш счёт: ${score}`);
+                    if (score > record) {
+                        record = score;
+                        localStorage.setItem("clickerRecord", record);
+                        document.getElementById("record").textContent = record;
+                    }
+                }
+            }, 1000);
+        }
+        document.getElementById("clickBtn").onclick = function() {
+            if (timeLeft > 0 && !Paused) {
+                score++;
+                document.getElementById("score").textContent = score;
+            }
+        }
+        document.getElementById("pauseBtn").onclick = function() {
+            if (!Running) return;
+            Paused = !Paused;
+            this.textContent = Paused ? "Продолжить" : "Пауза";
+        }
+        document.getElementById("resetBtn").onclick = function() {
+            score = 0; timeLeft = 30; Paused = false; Running = false;
+            document.getElementById("score").textContent = score;
+            document.getElementById("time").textContent = timeLeft;
+            document.getElementById("pauseBtn").textContent = "Пауза";
+            document.getElementById("clickBtn").disabled = true;
+            document.getElementById("pauseBtn").disabled = true;
+            document.getElementById("startBtn").disabled = false;
+            clearInterval(timer);
+        }
+
+        // Генератор приключений
+        const characters = [
+            { name: "Рыцарь", prep: "Рыцарем" },
+            { name: "Маг", prep: "Магом" },
+            { name: "Вор", prep: "Вором" },
+            { name: "Эльф", prep: "Эльфом" },
+            { name: "Орк", prep: "Орком" }
+        ];
+        const locations = [
+            { name: "Тёмный лес", prep: "Тёмном лесу" },
+            { name: "Замок", prep: "Заброшенном замке" },
+            { name: "Царство воды", prep: "Подводном царстве" },
+            { name: "Горы", prep: "Горном убежище" },
+            { name: "Лёд", prep: "Ледяной пещере" }
+        ];
+        const villains = [
+            { name: "Дракон", prep: "Драконом" },
+            { name: "Колдун", prep: "Колдуном" },
+            { name: "Гоблин", prep: "Гоблином" },
+            { name: "Демон", prep: "Демоном" },
+            { name: "Призрак", prep: "Призраком" }
+        ];
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+        function generateAdventure() {
+            const ch = getRandomElement(characters);
+            const loc = getRandomElement(locations);
+            const vil = getRandomElement(villains);
+            const text = `Ваш персонаж - ${ch.name}, в ${loc.prep}, сражается с ${vil.prep}.`;
+            document.getElementById("adventure").textContent = text;
+            saveToHistory(text);
+        }
+        function saveToHistory(a) {
+            let h = JSON.parse(localStorage.getItem("adventureHistory")) || [];
+            h.push(a);
+            localStorage.setItem("adventureHistory", JSON.stringify(h));
+            updateHistoryUI();
+        }
+        function updateHistoryUI() {
+            const list = document.getElementById("history");
+            list.innerHTML = "";
+            let h = JSON.parse(localStorage.getItem("adventureHistory")) || [];
+            h.forEach(entry => {
+                let li = document.createElement("li");
+                li.textContent = entry;
+                list.appendChild(li);
+            });
+        }
+        function clearHistory() {
+            localStorage.removeItem("adventureHistory");
+            updateHistoryUI();
+        }
+        updateHistoryUI();
+
+        // Угадай число
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsLeft = 10;
+        function checkGuess() {
+            let guess = parseInt(document.getElementById("guessInput").value);
+            let msg = document.getElementById("message");
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                msg.textContent = "Введите число от 1 до 100!";
+                return;
+            }
+            attemptsLeft--;
+            document.getElementById("attempts").textContent = attemptsLeft;
+            if (guess === randomNumber) {
+                msg.textContent = "Поздравляем! Вы угадали число!";
+                disableInput();
+            } else if (guess < randomNumber) {
+                msg.textContent = "Число больше!";
+            } else {
+                msg.textContent = "Число меньше!";
+            }
+            if (attemptsLeft === 0 && guess !== randomNumber) {
+                msg.textContent = `Вы проиграли! Загаданное число: ${randomNumber}.`;
+                disableInput();
+            }
+        }
+        function disableInput() {
+            document.getElementById("guessInput").disabled = true;
+        }
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attemptsLeft = 10;
+            document.getElementById("attempts").textContent = attemptsLeft;
+            document.getElementById("message").textContent = "";
+            document.getElementById("guessInput").value = "";
+            document.getElementById("guessInput").disabled = false;
+        }
+    </script>
 </body>
 </html>
