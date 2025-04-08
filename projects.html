@@ -77,31 +77,103 @@ input {
     margin-top: 10px;
 }
 
+/* Стили для светлой темы (по умолчанию) */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+footer {
+    margin-top: auto;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#themeToggleBtn {
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.project-card {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+input {
+    padding: 5px;
+    margin-top: 10px;
+}
+
 /* Стили для тёмной темы */
-body.dark-theme {
+body.dark-mode {
     background-color: #333;
     color: white;
 }
 
-body.dark-theme header, body.dark-theme footer {
+body.dark-mode header, body.dark-mode footer {
     background-color: #222;
 }
 
-body.dark-theme .project-card {
+body.dark-mode .project-card {
     background-color: #444;
     color: white;
 }
 
-body.dark-theme nav a {
+body.dark-mode nav a {
     color: white;
 }
 
-body.dark-theme button {
+body.dark-mode button {
     background-color: #555;
     color: white;
 }
 
-body.dark-theme #themeToggleBtn {
+body.dark-mode #themeToggleBtn {
     background-color: #666;
 }
 
