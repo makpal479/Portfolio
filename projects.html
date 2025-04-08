@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проекты — Мини-игры</title>
     <style>
-     /* Стили для светлой темы (по умолчанию) */
+    /* Стили для светлой темы (по умолчанию) */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    color: white;
+    color: black;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход для фона и текста */
 }
 
 header, footer {
@@ -21,6 +22,7 @@ header, footer {
     color: white;
     text-align: center;
     padding: 1em 0;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
 }
 
 footer {
@@ -31,6 +33,7 @@ button {
     margin: 5px;
     padding: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
 }
 
 #themeToggleBtn {
@@ -51,6 +54,7 @@ nav a {
     color: black;
     text-decoration: none;
     font-size: 18px;
+    transition: color 0.3s ease; /* Плавное изменение цвета текста */
 }
 
 .projects-container {
@@ -70,78 +74,7 @@ nav a {
     width: 100%;
     max-width: 400px;
     text-align: center;
-}
-
-input {
-    padding: 5px;
-    margin-top: 10px;
-}
-
-/* Стили для светлой темы (по умолчанию) */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header, footer {
-    background: #222;
-    color: white;
-    text-align: center;
-    padding: 1em 0;
-}
-
-footer {
-    margin-top: auto;
-}
-
-button {
-    margin: 5px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-#themeToggleBtn {
-    background-color: #444;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-nav a {
-    color: black;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.projects-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-.project-card {
-    background: white;
-    color: black;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
 }
 
 input {
