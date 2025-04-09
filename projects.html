@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проекты — Мини-игры</title>
     <style>
-/* Стили для светлой темы (по умолчанию) */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -14,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход для фона и текста */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header, footer {
@@ -22,7 +21,7 @@ header, footer {
     color: white;
     text-align: center;
     padding: 1em 0;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 footer {
@@ -50,10 +49,10 @@ nav {
 }
 
 nav a {
-    color: white; /* Текст меню всегда белый */
+    color: white;
     text-decoration: none;
     font-size: 18px;
-    transition: color 0.3s ease; /* Плавное изменение цвета текста */
+    transition: color 0.3s ease;
 }
 
 .projects-container {
@@ -73,7 +72,7 @@ nav a {
     width: 100%;
     max-width: 400px;
     text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 input {
@@ -81,7 +80,6 @@ input {
     margin-top: 10px;
 }
 
-/* Стили для тёмной темы */
 body.dark-mode {
     background-color: #333;
     color: white;
@@ -97,21 +95,20 @@ body.dark-mode .project-card {
 }
 
 body.dark-mode nav a {
-    color: white; /* Текст меню остаётся белым в тёмной теме */
+    color: white;
 }
 
 body.dark-mode button {
-    background-color: white; /* Белый фон кнопки в тёмной теме */
-    color: black; /* Чёрный текст на кнопке */
-    border: 2px solid #444; /* Та же граница */
-}
-
-body.dark-mode #themeToggleBtn {
-    background-color: white; /* Белая кнопка для переключения темы */
+    background-color: white;
     color: black;
     border: 2px solid #444;
 }
 
+body.dark-mode #themeToggleBtn {
+    background-color: white;
+    color: black;
+    border: 2px solid #444;
+}
     </style>
 </head>
 <body>
@@ -126,7 +123,6 @@ body.dark-mode #themeToggleBtn {
     </header>
 
     <div class="projects-container">
-        <!-- Кликер -->
         <div class="project-card">
             <h2>Кликер</h2>
             <p>Осталось времени: <span id="time">30</span>s</p>
@@ -138,7 +134,6 @@ body.dark-mode #themeToggleBtn {
             <button id="resetBtn">Сбросить счёт</button>
         </div>
 
-        <!-- Генератор приключений -->
         <div class="project-card">
             <h2>Генератор приключений</h2>
             <p id="adventure">Нажмите кнопку для генерации приключения.</p>
@@ -148,7 +143,6 @@ body.dark-mode #themeToggleBtn {
             <ul id="history"></ul>
         </div>
 
-        <!-- Угадай число -->
         <div class="project-card">
             <h2>Угадай число</h2>
             <p>Введите число от 1 до 100:</p>
