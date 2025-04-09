@@ -73,27 +73,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Генератор приключений
-        const characters = [
-            { name: "Рыцарь", prep: "Рыцарем" },
-            { name: "Маг", prep: "Магом" },
-            { name: "Вор", prep: "Вором" },
-            { name: "Эльф", prep: "Эльфом" },
-            { name: "Орк", prep: "Орком" }
-        ];
-        const locations = [
-            { name: "Тёмный лес", prep: "Тёмном лесу" },
-            { name: "Замок", prep: "Заброшенном замке" },
-            { name: "Царство воды", prep: "Подводном царстве" },
-            { name: "Горы", prep: "Горном убежище" },
-            { name: "Лёд", prep: "Ледяной пещере" }
-        ];
-        const villains = [
-            { name: "Дракон", prep: "Драконом" },
-            { name: "Колдун", prep: "Колдуном" },
-            { name: "Гоблин", prep: "Гоблином" },
-            { name: "Демон", prep: "Демоном" },
-            { name: "Призрак", prep: "Призраком" }
-        ];
+const characters = [
+    { name: "Хоббит", prep: "Хоббитом" },
+    { name: "Гондорец", prep: "Гондорцем" },
+    { name: "Эльф Лориэна", prep: "Эльфом Лориэна" },
+    { name: "Дунадaйн", prep: "Дунадaйном" },
+    { name: "Гном из Эребора", prep: "Гномом из Эребора" },
+    { name: "Леголас", prep: "Леголасом" }
+];
+
+const locations = [
+    { name: "Шир", prep: "Шире" },
+    { name: "Минас Тирит", prep: "Минас Тирите" },
+    { name: "Лориэн", prep: "Лориэне" },
+    { name: "Мория", prep: "Мории" },
+    { name: "Ородруин", prep: "Ородруине" }
+];
+
+const villains = [
+    { name: "Саурон", prep: "Сауроном" },
+    { name: "Назгул", prep: "Назгулом" },
+    { name: "Шелоб", prep: "Шелоб" },
+    { name: "Саруман", prep: "Саруманом" },
+    { name: "Урук-хай", prep: "Урук-хаем" }
+];
+
         function getRandomElement(array) {
             return array[Math.floor(Math.random() * array.length)];
         }
