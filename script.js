@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
 const characters = [
     { name: "Хоббит", prep: "Хоббитом" },
     { name: "Гондорец", prep: "Гондорцем" },
-    { name: "Эльф Лориэна", prep: "Эльфом Лориэна" },
     { name: "Дунадaйн", prep: "Дунадaйном" },
     { name: "Гном из Эребора", prep: "Гномом из Эребора" },
     { name: "Леголас", prep: "Леголасом" },
